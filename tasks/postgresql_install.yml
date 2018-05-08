@@ -1,0 +1,6 @@
+---
+- name: Install PostgreSQL
+  apt:
+    name: "{{ postgresql_apt_package }}"
+    state: present
+    update_cache: yes

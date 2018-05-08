@@ -1,0 +1,14 @@
+---
+- name: Include OS family specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_os_family }}.yml"
+
+- include_tasks: postgresql_pre.yml
+- include_tasks: postgresql_install.yml
+
+- block: # Config PostgreSQL
+  - include_tasks: postgresql_search_config.yml
+  - include_tasks: postgresql_post.yml
+  tags:
+    - postgresql-config

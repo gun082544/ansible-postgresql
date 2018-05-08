@@ -1,0 +1,30 @@
+---
+- name: Set list of path to look for local PostgreSQL configuration directory
+  set_fact:
+    postgresql_search_config_paths: "{{ postgresql_search_config_paths }} + [ '{{ postgresql_search_config_path }}' ]"
+  with_items: "{{ group_names }}"
+
+- name: Check if PostgreSQL configuration directory exists
+  stat:
+    path: "{{ item }}"
+  register: postgresql_config_check
+  become: false
+  delegate_to: 127.0.0.1
+  with_first_found:
+    - files: "{{ postgresql_search_config_paths }}"
+      skip: true
+
+- name: Set PostgreSQL configuration directory
+  set_fact:
+    postgresql_host_config_path: "{{ postgresql_config_check.results[0].stat.path }}"
+  when:
+    - postgresql_config_check.results[0] is defined
+    - postgresql_config_check.results[0].stat is defined
+    - postgresql_config_check.results[0].stat.isdir
+
+- name: Check if PostgreSQL template configuration file is exists
+  stat:
+    path: "{{ postgresql_host_config_file_path }}"
+  become: false
+  delegate_to: 127.0.0.1
+  register: postgresql_config_check

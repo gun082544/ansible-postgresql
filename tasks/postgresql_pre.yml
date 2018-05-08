@@ -1,0 +1,14 @@
+---
+- name: Add PostgreSQL repository key
+  apt_key:
+    url: "{{ postgresql_apt_key_url }}"
+
+- name: Add PostgreSQL apt-repository
+  apt_repository:
+    repo: "{{ postgresql_apt_repo }}"
+
+- name: Install required packages for PostgreSQL configuration
+  apt:
+    name: python-psycopg2
+    state: present
+    update_cache: yes

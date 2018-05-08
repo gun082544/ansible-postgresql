@@ -1,0 +1,20 @@
+---
+postgresql_search_config_path: "{{ playbook_dir }}/files/groups/{{ item }}/postgresql"
+postgresql_search_config_paths: []
+
+postgresql_host_config_file_path: "{{ postgresql_host_config_path | default(inventory_hostname) }}/postgresql.conf.j2"
+postgresql_config_file_path: /etc/postgresql/9.6/main/postgresql.conf
+
+# Sample to add users
+# postgresql_users:
+#   - username: user1
+#     password: pass1
+#     db: db1
+#   - username: user2
+#     password: pass2
+#     db: db2
+
+# Sample to create databases
+# postgresql_databases:
+#   - db1
+#   - db2

@@ -1,0 +1,35 @@
+---
+- name: Copy PostgreSQL configuration file
+  template:
+    src: "{{ postgresql_host_config_file_path }}"
+    dest: "{{ postgresql_config_file_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: postgresql_config_check.stat.exists
+  notify: Restart PostgreSQL
+
+- name: Create database(s)
+  become_user: postgres
+  postgresql_db:
+    name: "{{ item }}"
+  with_items: "{{ postgresql_databases }}"
+  when: postgresql_databases is defined
+
+- name: Create user(s)
+  become_user: postgres
+  postgresql_user:
+    name: "{{ item.username }}"
+    password: "{{ item.password }}"
+  with_items: "{{ postgresql_users }}"
+  when: postgresql_users is defined
+
+- name: Assign user(s) privileges
+  become_user: postgres
+  postgresql_privs:
+    db: "{{ item.db }}"
+    role: "{{ item.username }}"
+    type: database
+    privs: ALL
+  with_items: "{{ postgresql_users }}"
+  when: postgresql_users is defined
