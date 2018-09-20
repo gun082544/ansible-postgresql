@@ -1,4 +1,6 @@
 ---
+postgresql_apt_package: postgresql-9.6
+
 postgresql_search_config_path: "{{ playbook_dir }}/files/groups/{{ item }}/postgresql"
 postgresql_search_config_paths: []
 
