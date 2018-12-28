@@ -12,9 +12,11 @@ postgresql_config_file_path: /etc/postgresql/9.6/main/postgresql.conf
 #   - username: user1
 #     password: pass1
 #     db: db1
+#     roles: ""
 #   - username: user2
 #     password: pass2
 #     db: db2
+#     roles: [NO]SUPERUSER,LOGIN
 
 # Sample to create databases
 # postgresql_databases:

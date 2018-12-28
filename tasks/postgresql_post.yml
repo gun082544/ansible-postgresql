@@ -21,6 +21,7 @@
   postgresql_user:
     name: "{{ item.username }}"
     password: "{{ item.password }}"
+    role_attr_flags: "{{ item.roles }}"
   with_items: "{{ postgresql_users }}"
   when: postgresql_users is defined
 
