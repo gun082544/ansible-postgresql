@@ -1,11 +1,12 @@
 ---
-postgresql_apt_package: postgresql-9.6
+postgresql_version: "11"
+postgresql_apt_package: "postgresql-{{ postgresql_version }}"
 
 postgresql_search_config_path: "{{ playbook_dir }}/files/groups/{{ item }}/postgresql"
 postgresql_search_config_paths: []
 
 postgresql_host_config_file_path: "{{ postgresql_host_config_path | default(inventory_hostname) }}/postgresql.conf.j2"
-postgresql_config_file_path: /etc/postgresql/9.6/main/postgresql.conf
+postgresql_config_file_path: "/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf"
 
 # Sample to add users
 # postgresql_users:
