@@ -9,6 +9,6 @@
 
 - name: Install required packages for PostgreSQL configuration
   apt:
-    name: python3-psycopg2
+    name: "{{ 'python3-psycopg2' if ansible_python.version.major == 3 else 'python-psycopg2' }}"
     state: present
     update_cache: yes
