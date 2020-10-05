@@ -12,3 +12,10 @@
     name: "{{ 'python3-psycopg2' if ansible_python.version.major == 3 else 'python-psycopg2' }}"
     state: present
     update_cache: yes
+
+- name: Install ACL packages for PostgreSQL configuration
+  apt:
+    name: "acl"
+    state: present
+    update_cache: yes
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version >= '18'
