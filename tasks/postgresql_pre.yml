@@ -1,20 +1,20 @@
 ---
 - name: Add PostgreSQL repository key
-  apt_key:
+  ansible.builtin.apt_key:
     url: "{{ postgresql_apt_key_url }}"
 
 - name: Add PostgreSQL apt-repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ postgresql_apt_repo }}"
 
 - name: Install required packages for PostgreSQL configuration
-  apt:
+  ansible.builtin.apt:
     name: "{{ 'python3-psycopg2' if ansible_python.version.major == 3 else 'python-psycopg2' }}"
     state: present
     update_cache: yes
 
 - name: Install ACL packages for PostgreSQL configuration
-  apt:
+  ansible.builtin.apt:
     name: "acl"
     state: present
     update_cache: yes
